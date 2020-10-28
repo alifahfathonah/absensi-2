@@ -22,7 +22,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Lengkappp</th>
+                                        <th>Nama Lengkap</th>
                                         <th>Jenis Kelamin</th>
                                         <th>Email</th>
                                         <th>No Telepon</th>
