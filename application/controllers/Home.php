@@ -8,6 +8,7 @@
             $this->load->model('ModelShift');
             $this->load->model('ModelJabatan');
             $this->load->model('ModelUsers');
+            $this->load->model('ModelAbsensi');
         }
 
         public function list_shift(){
@@ -62,14 +63,26 @@
                 "data_karyawan"  => $this->ModelUsers->getDataKaryawanVerified(1),
                 "pegawai_active"    => "active",
                 
-            );
-
-           
-               
+            ); 
             $this->load->view('layout/header',$data);
             $this->load->view('layout/sidebar');
             $this->load->view('layout/navbar');
             $this->load->view('data/pegawai/list_pegawai');
+            $this->load->view('layout/footer');
+        }
+
+        public function laporan_kehadiran(){
+            $month = date('m');
+            $data= array(
+                "breadcumb"            => "Laporan Kehadiran",
+                "title"                => "Laporan Kehadiran - PT. Vinita",
+                "laporan_kehadiran"    => "active",
+                "data_kehadiran"       => $this->ModelAbsensi->getDataAbsensiByBulan($month)
+            ); 
+            $this->load->view('layout/header',$data);
+            $this->load->view('layout/sidebar');
+            $this->load->view('layout/navbar');
+            $this->load->view('data/laporan/kehadiran');
             $this->load->view('layout/footer');
         }
     }

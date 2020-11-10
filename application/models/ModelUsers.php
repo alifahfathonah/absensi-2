@@ -33,8 +33,9 @@
         }
 
         public function readDataProfile($id_users){
-            $sql = "SELECT * from tb_users,tb_detail_users WHERE
+            $sql = "SELECT * from tb_users,tb_detail_users,tb_jabatan WHERE
                         tb_users.id_users = tb_detail_users.users_id AND
+                        tb_detail_users.id_jabatan = tb_jabatan.id_jabatan AND
                         tb_users.id_users = ?";
             return $this->db->query($sql,$id_users)->row_array();
         }

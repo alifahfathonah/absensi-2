@@ -13,16 +13,23 @@
             return $this->db->get_where('tb_absensi',array('status' => $status,'date' => $date))->result_array();
         }
 
-        public function getDataAbsensiByTime(){
-            $sql = "SELECT * FROM tb_absensi WHERE check_in > '08:00:00'";
-            return $this->db->query($sql)->result_array();
+        public function getDataAbsensiByTime($date){
+            $sql = "SELECT * FROM tb_absensi WHERE check_in > '08:00:00' AND date = ?";
+            return $this->db->query($sql,$date)->result_array();
         }
 
         public function updateAbsensi($data,$id_users){
             return $this->db->update('tb_absensi',$data,array('id_users' => $id_users));
         }
 
-        public function getDataAbsensiByIdUsers($id_users){
-            return $this->db->get_where('tb_absensi',array('id_users' => $id_users))->row_array();
+        public function getDataAbsensiByIdUsers($id_users,$date){
+            return $this->db->get_where('tb_absensi',array('id_users' => $id_users,'date' => $date))->row_array();
+        }
+
+        public function getDataAbsensiByBulan($month){
+            $sql = "SELECT * FROM tb_absensi,tb_users WHERE 
+                        tb_absensi.id_users =  tb_users.id_users AND
+                        MONTH(tb_absensi.date) = ? ORDER BY date DESC";
+            return $this->db->query($sql,$month)->result_array();
         }
     }

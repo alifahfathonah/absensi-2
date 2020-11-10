@@ -108,10 +108,22 @@
                 <span class="menu-icon">
                   <i class="mdi mdi-playlist-play"></i>
                 </span>
-                <span class="menu-title">Data Absensi</span>
+                <span class="menu-title">Data Surat Izin</span>
               </a>
             </li>
             <li class="nav-item menu-items">
+              <a class="nav-link" href="pages/forms/basic_elements.html">
+                <span class="menu-icon">
+                  <i class="mdi mdi-playlist-play"></i>
+                </span>
+                <span class="menu-title">Data Cuti Karyawan</span>
+              </a>
+            </li>
+            <?php if (isset($laporan_kehadiran)) { ?>
+            <li class="nav-item menu-items active">
+            <?php }else{ ?>
+              <li class="nav-item menu-items">
+            <?php } ?>
               <a class="nav-link" data-toggle="collapse" href="#laporan" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-icon">
                   <i class="mdi mdi-laptop"></i>
@@ -119,40 +131,35 @@
                 <span class="menu-title">Laporan</span>
                 <i class="menu-arrow"></i>
               </a>
-              <div class="collapse" id="laporan">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Laporan Absennsi Perminggu</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Laporan Absensi Perbulan</a></li>
-                </ul>
-              </div>
+              <?php if (isset($laporan_kehadiran)) { ?>
+                <div class="collapse show" id="laporan">
+                <?php } else { ?>
+                  <div class="collapse " id="laporan">
+                  <?php } ?>
+                  <ul class="nav flex-column sub-menu">
+                    <?php if (isset($laporan_kehadiran)) { ?>
+                    <li class="nav-item"> <a class="nav-link active" href="<?= base_url() ?>home/laporan_kehadiran/">Laporan Kehadiran</a></li>
+                    <?php }else{ ?>
+                      <li class="nav-item"> <a class="nav-link" href="<?= base_url() ?>home/laporan_kehadiran/">Laporan Kehadiran</a></li>
+                    <?php } ?>
+                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Riwayat Kehadiran</a></li>
+                  </ul>
+                  </div>
             </li>
             <li class="nav-item nav-category">
               <span class="nav-link">Lain-lain</span>
             </li>
-            <?php if (isset($shift_active)) { ?>
-              <li class="nav-item menu-items <?= $shift_active; ?>">
+            <?php if (isset($jabatan_active)) { ?>
+              <li class="nav-item menu-items <?= $jabatan_active; ?>">
               <?php } else { ?>
               <li class="nav-item menu-items">
               <?php } ?>
-              <a class="nav-link" href="<?= base_url() . "home/list_shift" ?>">
+              <a class="nav-link" href="<?= base_url() . "home/list_jabatan" ?>">
                 <span class="menu-icon">
-                  <i class="mdi mdi-speedometer"></i>
+                  <i class="mdi mdi-file-document-box"></i>
                 </span>
-                <span class="menu-title">Data Shift</span>
+                <span class="menu-title">Data Jabatan</span>
               </a>
               </li>
-              <?php if (isset($jabatan_active)) { ?>
-                <li class="nav-item menu-items <?= $jabatan_active; ?>">
-                <?php } else { ?>
-                <li class="nav-item menu-items">
-                <?php } ?>
-                <a class="nav-link" href="<?= base_url() . "home/list_jabatan" ?>">
-                  <span class="menu-icon">
-                    <i class="mdi mdi-file-document-box"></i>
-                  </span>
-                  <span class="menu-title">Data Jabatan</span>
-                </a>
-                </li>
       </ul>
     </nav>
-    

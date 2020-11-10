@@ -27,7 +27,7 @@
                 "data_sudahpresensi"    => $this->ModelAbsensi->getDataAbsensiByStatus('Hadir',$date),
                 "data_belumpresensi"    => $this->ModelAbsensi->getDataAbsensiByStatus('Tidak',$date),
                 "data_izinpresensi"     => $this->ModelAbsensi->getDataAbsensiByStatus('Izin',$date),
-                "data_terlambat"        => $this->ModelAbsensi->getDataAbsensiByTime()
+                "data_terlambat"        => $this->ModelAbsensi->getDataAbsensiByTime($date)
             );
             $this->load->view('layout/header',$data);
             $this->load->view('layout/sidebar');
