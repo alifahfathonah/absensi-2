@@ -1,0 +1,23 @@
+.activee{
+    content: ""!important;
+    width: 3px!important;
+    height: 100%!important;
+    background: #0090e7!important;
+    display: inline-blockv!important;
+    position: absolute!important;
+    left: 0!important;
+    top: 0!important;
+}
+
+.nav-link-active{
+    background: #0f1015!important;
+    position: relative!important;
+}
+
+.form-readonly{
+    background-color: #2A3038!important;
+    color: rgb(155, 154, 154)!important;
+}
+.form{
+    color : #fff!important;
+}
