@@ -63,12 +63,14 @@
                         'status'    => true
                     ],200);
                 }
-                $this->ModelAbsensi->updateAbsensi($data,$id_users);
-                $this->response([
-                    'message'   => "Absensi berhasil dilakukan",
-                    'status'    => true
-                ],200);
+               
+                
             }
+            $this->ModelAbsensi->updateAbsensi($data,$id_users);
+            $this->response([
+                'message'   => "Absensi berhasil dilakukan",
+                'status'    => true
+            ],200);
  
 
         }
@@ -84,5 +86,26 @@
                 'status'        => true,
                 'data_absensi'  => $getDataAbsensi
             ],200);
+        }
+
+        public function getLaporanKehadiran_post(){
+            $month = date('m');
+            $no_pegawai = $this->input->post('id_users');
+            $getDataPegawai = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
+            $id_users = $getDataPegawai['id_users'];
+            $getDataLaporanKehadiran = $this->ModelAbsensi->getDataLaporanKehadiran($id_users,$month);
+            $getDataHadir = $this->ModelAbsensi->getDataHadir($id_users,$month,'Hadir');
+            $getDataTidakHadir = $this->ModelAbsensi->getDataHadir($id_users,$month,'Tidak');
+            $getDataIzin = $this->ModelAbsensi->getDataHadir($id_users,$month,'Izin');
+
+            $this->response([
+                'message'       => "data berhasil didapatkan",
+                'status'        => true,
+                'data_laporan'  => $getDataLaporanKehadiran,
+                'hadir'         => $getDataHadir['jumlah'],
+                'tidak_hadir'   => $getDataTidakHadir['jumlah'],
+                'izin'          => $getDataIzin['jumlah']
+            ],200);
+
         }
     }                                        
