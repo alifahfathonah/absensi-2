@@ -66,7 +66,7 @@
                
                 
             }
-            $this->ModelAbsensi->updateAbsensi($data,$id_users);
+            $this->ModelAbsensi->updateAbsensi($data,$id_users,$date);
             $this->response([
                 'message'   => "Absensi berhasil dilakukan",
                 'status'    => true
@@ -93,6 +93,7 @@
             $no_pegawai = $this->input->post('id_users');
             $getDataPegawai = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
             $id_users = $getDataPegawai['id_users'];
+
             $getDataLaporanKehadiran = $this->ModelAbsensi->getDataLaporanKehadiran($id_users,$month);
             $getDataHadir = $this->ModelAbsensi->getDataHadir($id_users,$month,'Hadir');
             $getDataTidakHadir = $this->ModelAbsensi->getDataHadir($id_users,$month,'Tidak');
@@ -107,5 +108,27 @@
                 'izin'          => $getDataIzin['jumlah']
             ],200);
 
+        }
+
+        public function getPercentAbsensi_post(){
+            $no_pegawai = $this->input->post('no_pegawai');
+            $month = date('m');
+            $getDataPegawai = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
+            $id_users = $getDataPegawai['id_users'];
+            // mengambil data-data dari model
+            $getDataHadir = $this->ModelAbsensi->getDataHadir($id_users,$month,'Hadir');
+            $getCountDataKehadiran = $this->ModelAbsensi->getCountAbsensi($id_users,$month);
+            //menghitung percent dari data-data hadir dan data keseluruhan
+
+            $percent = ( $getDataHadir['jumlah'] / $getCountDataKehadiran['jumlah'] ) * 100;
+            if($percent < 100){
+                $splitPercent = substr($percent,0,2);
+            }else{
+                $splitPercent = $percent;
+            }
+            $this->response([
+                'status'    => true,
+                'percent'   => $splitPercent
+            ],200);
         }
     }                                        

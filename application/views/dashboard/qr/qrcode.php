@@ -57,8 +57,8 @@
                     <?php if (!isset($qr_code)) { ?>
                         <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
 
-                            <span class="label-input100">ID Pegawai</span>
-                            <input class="input100" type="text" name="id_pegawai" placeholder="Masukan ID Pegawai ...">
+                            <span style="font-weight:bold;" class="label-input100 mr-2">PG-</span>
+                            <input class="input100" type="text" autocomplete="off" name="id_pegawai" placeholder="Masukan ID Pegawai ...">
                             <span class="focus-input100"></span>
                         </div>
                     <?php } else { ?>

@@ -12,7 +12,7 @@ class Qr extends CI_Controller
 
     public function index()
     {
-        $id_pegawai = $this->input->post('id_pegawai');
+        $id_pegawai = "PG-".$this->input->post('id_pegawai');
         if ($id_pegawai != null) {
             $date = date('Y-m-d');
             $cekDataPegawai = $this->ModelUsers->getDataUsersByIdPegawai($id_pegawai);

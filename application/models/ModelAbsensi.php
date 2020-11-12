@@ -18,8 +18,8 @@
             return $this->db->query($sql,$date)->result_array();
         }
 
-        public function updateAbsensi($data,$id_users){
-            return $this->db->update('tb_absensi',$data,array('id_users' => $id_users));
+        public function updateAbsensi($data,$id_users,$date){
+            return $this->db->update('tb_absensi',$data,array('id_users' => $id_users,'date' => $date));
         }
 
         public function getDataAbsensiByIdUsers($id_users,$date){
@@ -46,5 +46,12 @@
                         MONTH(date) = ? AND
                         status = ?";
             return $this->db->query($sql,array($id_users,$month,$status))->row_array();
+        }
+
+        public function getCountAbsensi($id_users,$month){
+            $sql = "SELECT COUNT(id_users)as jumlah FROM tb_absensi WHERE 
+                        id_users = ? AND
+                        MONTH(date) = ? ";
+            return $this->db->query($sql,array($id_users,$month))->row_array();
         }
     }
