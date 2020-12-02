@@ -14,50 +14,40 @@
               <div class="col-lg-12 grid-margin stretch-card">
                   <div class="card">
                       <div class="card-body">
-                          <h4 class="card-title"><?= $breadcumb ?></h4>
-                          </p>
+                          <h4 class="card-title"><?= $breadcumb ?> Bulan <?= date('F'); ?></h4>
                           <div class="table-responsive">
-                              <table class="table table-bordered">
+                              <table class="table table-bordered table-striped  dataTable js-exportable mt-3">
                                   <thead>
                                       <tr>
                                           <th>No</th>
-                                          <th>Nama Lengkap</th>
-                                          <th>Jenis Kelamin</th>
-                                          <th>Email</th>
-                                          <th>No Telepon</th>
-                                          <th>Tanggal Lahir</th>
+                                          <th>Tanggal</th>
+                                          <th>Nama</th>
+                                          <th>Alasan</th>
+                                          <th>Bukti</th>
                                           <th>Action</th>
                                       </tr>
                                   </thead>
                                   <tbody>
-                                      <?php $i = 0;
-                                        foreach ($data_karyawan as $row) {
-                                            $i++; ?>
+                                      <?php $i = 1;
+                                        foreach ($data_suratizin as $row) { ?>
                                           <tr>
-                                              <td><?= $i; ?></td>
+                                              <th><?= $i++ ?></th>
+                                              <td><span class="badge badge-primary"><?= date('d-m-Y', strtotime($row['tanggal'])) ?></span></td>
                                               <td><?= $row['nama_lengkap'] ?></td>
-                                              <td><?= $row['jenis_kelamin'] ?></td>
-                                              <td><?= $row['email'] ?></td>
-                                              <td><?= sprintf(
-                                                        "%s-%s-%s",
-                                                        substr($row['no_telp'], 0, 4),
-                                                        substr($row['no_telp'], 4, 4),
-                                                        substr($row['no_telp'], 8)
-                                                    ); ?></td>
-                                              <td><?= $row['tgl_lahir']; ?></td>
+                                              <td><?= $row['alasan']; ?></td>
+                                              <td><a target="_blank" href="<?= base_url() ?>assets/image_surat/<?= $row['bukti'] ?>" class="badge badge-info">Lihat Bukti</a></td>
                                               <td>
                                                   <center>
                                                       <span data-toggle="modal" data-target="#modal_detail">
-                                                      <button onClick="detail_pegawai('<?= $row['nama_lengkap'] ?>','<?= $row['no_pegawai'] ?>','<?= $row['email'] ?>','<?= $row['nama_jabatan'] ?>','<?= $row['no_telp'] ?>','<?= $row['device_id'] ?>','<?= $row['foto'] ?>','<?= base_url() ?>')" id="btn_verif" type="button" class="btn btn-inverse-primary btn-rounded btn-icon" data-toggle="tooltip" data-placement="top" title="Detail Data Pegawai">
-                                                          <i class="mdi mdi-account-card-details"></i>
-                                                      </button>
+                                                          <button onClick="detail_pegawai('<?= $row['nama_lengkap'] ?>','<?= $row['no_pegawai'] ?>','<?= $row['email'] ?>','<?= $row['nama_jabatan'] ?>','<?= $row['no_telp'] ?>','<?= $row['device_id'] ?>','<?= $row['foto'] ?>','<?= base_url() ?>')" type="button" class="btn btn-inverse-primary btn-rounded btn-icon" data-toggle="tooltip" data-placement="top" title="Detail Data Pegawai">
+                                                              <i class="mdi mdi-account-card-details"></i>
+                                                          </button>
                                                       </span>
-                                                      <!-- <button type="button" class="btn btn-inverse-info btn-rounded btn-icon" data-toggle="tooltip" data-placement="top" title="Edit Data">
-                                                          <i class="mdi mdi-pencil-box-outline"></i>
-                                                      </button> -->
-                                                      <button type="button" class="btn btn-inverse-danger btn-rounded btn-icon" data-toggle="tooltip" data-placement="top" title="Delete Data">
-                                                          <i class="mdi mdi-account-remove"></i>
-                                                      </button>
+                                                      <span data-toggle="modal" data-target="#modal_confirm">
+                                                          <button onClick="confirmIzin('<?= base_url() ?>absensi/changeStatusIzin/<?= $row['id_absensi'] ?>/<?= $row['tanggal']?>/<?= $row['id_users'] ?>')" type="button" class="btn btn-inverse-success btn-rounded btn-icon" data-toggle="tooltip" data-placement="top" title="Konfirmasi Surat Izin">
+                                                              <i class="mdi mdi-checkbox-marked-circle-outline"></i>
+                                                          </button>
+                                                      </span>
                                                   </center>
                                               </td>
                                           </tr>
@@ -112,3 +102,23 @@
                   </div>
               </div>
           </div>
+      </div>
+      <div class="modal fade" id="modal_confirm" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content bg-primary">
+                  <div class="modal-header">
+                      <h4 class="modal-title" id="title_modal">Konfirmasi Surat Izin</h4>
+                  </div>
+                  <hr>
+                  <div class="modal-body">
+                      Anda yakin ingin mengkonfirmasi surat izin tersebut?
+                  </div>
+                  <hr>
+                  <div class="modal-footer">
+                      <a href="" id="confirm_link" class="btn btn-primary btn-fw">Konfirmasi</a>
+                      <button type="button" class="btn btn-outline-secondary btn-fw" data-dismiss="modal">Keluar</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>

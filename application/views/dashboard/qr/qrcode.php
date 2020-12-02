@@ -53,7 +53,7 @@
                     <?php } ?>
                 </div>
 
-                <form class="login100-form validate-form" method="post" action="<?= base_url('qr/') ?>">
+                <form class="login100-form validate-form" method="post" action="<?= base_url('qr/proses_qr') ?>">
                     <?php if (!isset($qr_code)) { ?>
                         <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
 

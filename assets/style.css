@@ -9,6 +9,10 @@
     top: 0!important;
 }
 
+.bg-primary{
+    background-color: #191c24!important;
+}
+
 .nav-link-active{
     background: #0f1015!important;
     position: relative!important;
@@ -122,4 +126,14 @@ div.dataTables_wrapper div.dataTables_filter label{
     cursor: default;
     background-color: #337ab7;
     border-color: #337ab7;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+    color: #ffffff!important;
+    background-color: #2c2e33!important;
+    border-color: #2c2e33 #2c2e33 black!important;
+}
+
+.modal-size{
+    max-width:65%!important;  
 }

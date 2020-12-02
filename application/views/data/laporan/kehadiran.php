@@ -31,18 +31,19 @@
                                       </tr>
                                   </thead>
                                   <tbody>
-                                      <?php $i = 1; foreach($data_kehadiran as $row) {?>
-                                      <tr>
-                                          <th><?= $i++ ?></th>
-                                          <td><span class="badge badge-warning"><?= date('d-m-Y',strtotime($row['date'])) ?></span></td>
-                                          <!-- <td><span class="badge badge-success">Tidak</span></td>  -->
-                                          <td><?= $row['nama_lengkap'] ?></td>
-                                          <td><?= $row['check_in']; ?></td>
-                                          <td><?= $row['check_out'] ?></td>
-                                          <td><?= $row['late'] ?></td>
-                                          <td><?= $row['work_time'] ?></td>
-                                          <td><span class="badge badge-info"><?= $row['status'] ?></span></td>
-                                      </tr>
+                                      <?php $i = 1;
+                                        foreach ($data_kehadiran as $row) { ?>
+                                          <tr>
+                                              <th><?= $i++ ?></th>
+                                              <td><span class="badge badge-primary"><?= date('d-m-Y', strtotime($row['date'])) ?></span></td>
+                                              <!-- <td><span class="badge badge-success">Tidak</span></td>  -->
+                                              <td><?= $row['nama_lengkap'] ?></td>
+                                              <td><?= $row['check_in']; ?></td>
+                                              <td><?= $row['check_out'] ?></td>
+                                              <td><?= $row['late'] ?></td>
+                                              <td><?= $row['work_time'] ?></td>
+                                              <td><span class="badge badge-info"><?= $row['status'] ?></span></td>
+                                          </tr>
                                       <?php } ?>
                                   </tbody>
                               </table>

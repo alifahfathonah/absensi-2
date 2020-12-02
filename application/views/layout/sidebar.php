@@ -15,8 +15,8 @@
                 <span class="count bg-success"></span>
               </div>
               <div class="profile-name">
-                <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
-                <span>Gold Member</span>
+                <h5 class="mb-0 font-weight-normal"><?= $this->session->userdata('full_name_session'); ?></h5>
+                <span>Admin</span>
               </div>
             </div>
             <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -103,8 +103,12 @@
                 </ul>
                 </div>
             </li>
+            <?php if(isset($surat_izin)){ ?>
+            <li class="nav-item menu-items active">
+            <?php }else{ ?>
             <li class="nav-item menu-items">
-              <a class="nav-link" href="pages/forms/basic_elements.html">
+            <?php } ?>
+              <a class="nav-link" href="<?= base_url() ?>home/surat_izin/">
                 <span class="menu-icon">
                   <i class="mdi mdi-playlist-play"></i>
                 </span>
@@ -112,14 +116,14 @@
               </a>
             </li>
             <li class="nav-item menu-items">
-              <a class="nav-link" href="pages/forms/basic_elements.html">
+              <a class="nav-link" href="<?= base_url() ?>home/surat_izin/">
                 <span class="menu-icon">
                   <i class="mdi mdi-playlist-play"></i>
                 </span>
                 <span class="menu-title">Data Cuti Karyawan</span>
               </a>
             </li>
-            <?php if (isset($laporan_kehadiran)) { ?>
+            <?php if (isset($laporan_kehadiran)|| isset($riwayat_kehadiran)) { ?>
             <li class="nav-item menu-items active">
             <?php }else{ ?>
               <li class="nav-item menu-items">
@@ -131,7 +135,7 @@
                 <span class="menu-title">Laporan</span>
                 <i class="menu-arrow"></i>
               </a>
-              <?php if (isset($laporan_kehadiran)) { ?>
+              <?php if (isset($laporan_kehadiran) || isset($riwayat_kehadiran)) { ?>
                 <div class="collapse show" id="laporan">
                 <?php } else { ?>
                   <div class="collapse " id="laporan">
@@ -142,7 +146,11 @@
                     <?php }else{ ?>
                       <li class="nav-item"> <a class="nav-link" href="<?= base_url() ?>home/laporan_kehadiran/">Laporan Kehadiran</a></li>
                     <?php } ?>
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Riwayat Kehadiran</a></li>
+                    <?php if(isset($riwayat_kehadiran)){ ?>
+                    <li class="nav-item"> <a class="nav-link active" href="<?= base_url() ?>home/riwayat_kehadiran/">Riwayat Kehadiran</a></li>
+                    <?php }else{ ?>
+                      <li class="nav-item"> <a class="nav-link " href="<?= base_url() ?>home/riwayat_kehadiran/">Riwayat Kehadiran</a></li>
+                    <?php } ?>
                   </ul>
                   </div>
             </li>

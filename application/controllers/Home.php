@@ -9,6 +9,8 @@
             $this->load->model('ModelJabatan');
             $this->load->model('ModelUsers');
             $this->load->model('ModelAbsensi');
+            $this->load->model('ModelSurat');
+            $this->load->model('ModelGaji');
         }
 
         public function list_shift(){
@@ -36,6 +38,7 @@
             $this->load->view('layout/header',$data);
             $this->load->view('layout/sidebar');
             $this->load->view('layout/navbar');
+            $this->load->view('data/jabatan/list_jabatan');
             $this->load->view('layout/footer');
      
         }
@@ -85,4 +88,95 @@
             $this->load->view('data/laporan/kehadiran');
             $this->load->view('layout/footer');
         }
+
+        public function riwayat_kehadiran(){
+            $month = date('m');
+            $kehadiran = $this->ModelAbsensi->getDataAbsensiGroup($month);
+            $array = [];
+            foreach($kehadiran as $k){
+                $id_users = $k['id_users'];
+                $getDataAbsensi = $this->ModelAbsensi->getDataAbsensiByIdUsersGroup($month,$id_users);
+                $hadir = $this->ModelAbsensi->getDataKehadiranByStatus($month,'Hadir',$id_users);
+                $tidakhadir = $this->ModelAbsensi->getDataKehadiranByStatus($month,'Tidak',$id_users);
+                $izin = $this->ModelAbsensi->getDataKehadiranByStatus($month,'Izin',$id_users);
+                $cuti = $this->ModelAbsensi->getDataKehadiranByStatus($month,'Cuti',$id_users);
+                $telat = $this->ModelAbsensi->getDataKehadiranTelat($month,$id_users);
+                $uangMakan = $this->ModelGaji->getDataTotal($id_users,$month);
+                if($hadir != null){
+                    $getDataAbsensi += array('hadir' => $hadir['jumlah']);
+                }else{
+                    $getDataAbsensi += array('hadir'   => 0);
+                }
+
+                if($tidakhadir != null){
+                    $getDataAbsensi += array('tidak_hadir' => $tidakhadir['jumlah']);
+                }else{
+                    $getDataAbsensi += array('tidak_hadir'  => 0);
+                }
+
+                if($izin != null){
+                    $getDataAbsensi += array('izin' => $izin['jumlah']);
+                }else{
+                    $getDataAbsensi += array('izin' => 0);
+                }
+
+                if($cuti != null){
+                    $getDataAbsensi += array('cuti' => $cuti['jumlah']);
+                }else{
+                    $getDataAbsensi += array('cuti' => 0);
+                }
+                
+                $getDataAbsensi += array("telat"=> $telat['jumlah']);
+                $getDataAbsensi += array("uang_makan" => $uangMakan['total']);
+
+                array_push($array,$getDataAbsensi);
+            }
+            
+            $data= array(
+                "breadcumb"            => "Riwayat Kehadiran",
+                "title"                => "Riwayat Kehadiran - PT. Vinita",
+                "riwayat_kehadiran"    => "active",
+                "data_kehadiran"       => $array
+            ); 
+            $this->load->view('layout/header',$data);
+            $this->load->view('layout/sidebar');
+            $this->load->view('layout/navbar');
+            $this->load->view('data/laporan/riwayat_kehadiran');
+            $this->load->view('layout/footer');
+        }
+
+        public function detail_kehadiran(){
+            $id_pegawai = $this->uri->segment(3);
+            $month = date('m');
+            $getDataUser = $this->ModelUsers->getDataUsersByIdPegawai($id_pegawai);
+            $id_users = $getDataUser['id_users'];
+            $data= array(
+                "breadcumb"            => "Riwayat Kehadiran",
+                "title"                => "Riwayat Kehadiran - PT. Vinita",
+                "riwayat_kehadiran"    => "active",
+                "data_pegawai"         => $this->ModelUsers->getDataUsersByIdPegawai($id_pegawai),
+                'data_kehadiran'       => $this->ModelAbsensi->getDataAbsensiByBulanAndId($month,$id_users),
+                'data_suratizin'       => $this->ModelSurat->getAllDataSuratIzinByIdUsers($id_users)
+            ); 
+            $this->load->view('layout/header',$data);
+            $this->load->view('layout/sidebar');
+            $this->load->view('layout/navbar');
+            $this->load->view('data/laporan/detail_kehadiran');
+            $this->load->view('layout/footer');
+        }
+
+        public function surat_izin(){
+            $data= array(
+                "breadcumb"            => "Riwayat Kehadiran",
+                "title"                => "Riwayat Kehadiran - PT. Vinita",
+                "surat_izin"           => "active",
+                "data_suratizin"       => $this->ModelSurat->getDataSuratByStatus(0)
+            ); 
+            $this->load->view('layout/header',$data);
+            $this->load->view('layout/sidebar');
+            $this->load->view('layout/navbar');
+            $this->load->view('data/surat/surat_izin');
+            $this->load->view('layout/footer');
+        }
+
     }

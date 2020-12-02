@@ -2,7 +2,7 @@
  <!-- partial:partials/_footer.html -->
  <footer class="footer">
    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-     <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2019 <a href="https://www.bootstrapdash.com/" target="_blank">BootstrapDash</a>. All rights reserved.</span>
+     <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2020 <a href="#">PT ...</a>. All rights reserved.</span>
      <span class="text-muted float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
    </div>
  </footer>
@@ -35,7 +35,7 @@
  <script src="<?= base_url() ?>assets/admin/js/alerts.js"></script>
  <script src="<?= base_url() ?>assets/admin/js/toastr.js"></script>
  <script src="<?= base_url() ?>assets/admin/js_data/pegawai.js"></script>
- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <script src="<?= base_url() ?>assets/admin/js_data/surat.js"></script>
  <script src="<?= base_url() ?>assets/admin/jquery-datatable/jquery.dataTables.js"></script>
  <script src="<?= base_url() ?>assets/admin/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
  <script src="<?= base_url() ?>assets/admin/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
@@ -83,6 +83,11 @@
 
      toastr.success(text_toastr.innerHTML);
    }
+ </script>
+ <script>
+   $(function() {
+     $('[data-toggle="tooltip"]').tooltip()
+   })
  </script>
  </body>
 

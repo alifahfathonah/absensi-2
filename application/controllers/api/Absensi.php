@@ -9,6 +9,7 @@
         {
             parent::__construct();
             $this->load->model('ModelUsers');
+            $this->load->model('ModelGaji');
             $this->load->model('ModelAbsensi');
         }        
 
@@ -16,6 +17,8 @@
             // ini proses absensi
             $date = date('Y-m-d'); // ini ambil tanggal hari ini
             $no_pegawai = $this->input->post('no_pegawai'); // ambil dari no pegawai
+
+            // $time   = '20:00:00'; // ambil dari waktu yang disetting manual
             $time   = $this->input->post('time'); // ambil dari waktu yang ada di handphone
 
             $getDataPegawai = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai); //mengambil id users dari no pegawai
@@ -25,7 +28,7 @@
             if($time > $data_checkin){ // membandingkan waktu absen dengan data checkin yang ada didatabase
                 //ini proses dimana jika waktu absen melebihi jam 08:00:00
                 $is_late = 1;
-                $start_checkin = strtotime($data_checkin) + 3600; // mengubah waktu menjadi string
+                $start_checkin = strtotime($data_checkin) + (3600*7); // mengubah waktu menjadi string
                 $time_absen = strtotime($time); // sama seperti diatas
 
                 $late = (date('H:i:s',$time_absen - $start_checkin)); //mengurangi waktu absen untuk mengambil waktu telat
@@ -36,42 +39,56 @@
             }
             
             $cekDataAbsensi = $this->ModelAbsensi->getDataAbsensiByIdUsers($id_users,$date); //mengambil data absensi hari ini, tujuan nya untuk mengecek si pegawai absen masuk atau absen pulang
-            
-            if($cekDataAbsensi['check_in'] == "00:00:00"){
-                // ini proses dimana pegawai melakukan absen masuk
-                $data = array(
-                    'check_in'  => $time,
-                    'is_late'   => $is_late,
-                    'status'    => "Hadir",
-                    'late'      => $late
-                );
-            }else{
-                //ini proses dimana pegawai melakukan absen keluar
-                if($cekDataAbsensi['check_out'] == "00:00:00"){
-                    $checkin_absensi = $cekDataAbsensi['check_in'];
-                    $start_checkout = strtotime($checkin_absensi);
-                    $end_checkout = strtotime($time);
-                    $result = ($end_checkout - 3600) - $start_checkout;
-                    $work_time = date('H:i:s',$result);
+            if($cekDataAbsensi != null){
+                if($cekDataAbsensi['check_in'] == "00:00:00"){
+                    // ini proses dimana pegawai melakukan absen masuk
                     $data = array(
-                        'check_out'  => $time,
-                        'work_time'  => $work_time
+                        'check_in'  => $time,
+                        'is_late'   => $is_late,
+                        'status'    => "Hadir",
+                        'late'      => $late
                     );
+                    
                 }else{
-                    $this->response([
-                        'message'   => "Maaf, Anda sudah melakukan absensi !!",
-                        'status'    => true
-                    ],200);
+                    //ini proses dimana pegawai melakukan absen keluar
+                    if($cekDataAbsensi['check_out'] == "00:00:00"){
+                        $checkin_absensi = $cekDataAbsensi['check_in'];
+                        $start_checkout = strtotime($checkin_absensi);
+                        $end_checkout = strtotime($time);
+                        $result = ($end_checkout - (3600*7)) - $start_checkout;
+                        $work_time = date('H:i:s',$result);
+                        $jam_kerja = substr($work_time,0,2);
+                        $uang_makan = $jam_kerja * 2500;
+                        $data = array(
+                            'check_out'  => $time,
+                            'work_time'  => $work_time
+                        );
+                        $updateUangMakan = array(
+                            'nominal'       => $uang_makan
+                        );
+                        $this->ModelAbsensi->updateUangMakan($updateUangMakan,$cekDataAbsensi['id_absensi']);
+                    }else{
+                        $this->response([
+                            'message'   => "Maaf, Anda sudah melakukan absensi !!",
+                            'status'    => true
+                        ],200);
+                    }
+                   
+                    
                 }
-               
-                
+                $this->ModelAbsensi->updateAbsensi($data,$id_users,$date);
+                $this->response([
+                    'message'   => "Absensi berhasil dilakukan",
+                    'status'    => true
+                ],200);
+     
+            }else{
+                $this->response([
+                    'message'   => "Absensi belum di mulai oleh admin,silahkan tunggu",
+                    'status'    => true
+                ],200);
             }
-            $this->ModelAbsensi->updateAbsensi($data,$id_users,$date);
-            $this->response([
-                'message'   => "Absensi berhasil dilakukan",
-                'status'    => true
-            ],200);
- 
+           
 
         }
 
@@ -129,6 +146,43 @@
             $this->response([
                 'status'    => true,
                 'percent'   => $splitPercent
+            ],200);
+        }
+
+        public function getTotalUangMakan_post(){
+            $no_pegawai = $this->input->post('no_pegawai');
+            $month = date('m');
+            $getDataPegawai = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
+            $id_users = $getDataPegawai['id_users'];
+
+            $getTotalGaji = $this->ModelGaji->getDataTotal($id_users,$month);
+            if($getTotalGaji != null){
+                $this->response([
+                    'status'    => true,
+                    'total'     => $getTotalGaji['total']
+                ],200);
+            }else{
+                $this->response([
+                    'status'    => true,
+                    'total'     => "0"
+                ],200);
+            }
+            
+            
+
+        }
+
+
+        public function getGajiUangMakan_post(){
+            $no_pegawai = $this->input->post('no_pegawai');
+            $month = date('m');
+            $getDataPegawai = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
+            $id_users = $getDataPegawai['id_users'];
+
+            $getData = $this->ModelGaji->getAllData($id_users,$month);
+            $this->response([
+                'status'    => true,
+                'data_gaji' => $getData
             ],200);
         }
     }                                        

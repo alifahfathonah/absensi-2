@@ -33,6 +33,14 @@
             return $this->db->query($sql,$month)->result_array();
         }
 
+        public function getDataAbsensiByBulanAndId($month,$id_users){
+            $sql = "SELECT * FROM tb_absensi,tb_users WHERE 
+                        tb_absensi.id_users =  tb_users.id_users AND
+                        tb_absensi.id_users = ? AND
+                        MONTH(tb_absensi.date) = ? ORDER BY date DESC";
+            return $this->db->query($sql,array($id_users,$month))->result_array();
+        }
+
         public function getDataLaporanKehadiran($id_users,$month){
             $sql = "SELECT * FROM tb_absensi WHERE 
                         id_users = ? AND
@@ -53,5 +61,47 @@
                         id_users = ? AND
                         MONTH(date) = ? ";
             return $this->db->query($sql,array($id_users,$month))->row_array();
+        }
+
+
+        public function getDataAbsensiGroup($month){
+            $sql = "SELECT * 
+                         FROM tb_absensi,tb_users WHERE
+                        tb_absensi.id_users = tb_users.id_users  AND
+                        MONTH(tb_absensi.date) = ?  GROUP BY tb_absensi.id_users";
+            return $this->db->query($sql,$month)->result_array();
+        }
+        public function getDataKehadiranByStatus($month,$status,$id_users){
+            $sql = "SELECT COUNT(status) as jumlah FROM tb_absensi WHERE
+                        MONTH(date) = ? AND
+                        status = ? AND
+                        tb_absensi.id_users = $id_users GROUP BY id_users";
+            return $this->db->query($sql,array($month,$status))->row_array();
+        }
+
+        public function getDataAbsensiByIdUsersGroup($month,$id_users){
+            $sql = "SELECT * FROM tb_absensi,tb_users WHERE
+                        tb_absensi.id_users = tb_users.id_users  AND
+                        MONTH(tb_absensi.date) = ? AND
+                        tb_absensi.id_users = $id_users GROUP BY tb_absensi.id_users";
+            return $this->db->query($sql,$month)->row_array();
+        }
+
+        public function getDataKehadiranTelat($month,$id_users){
+            $sql = "SELECT SUM(is_late) as jumlah FROM tb_absensi WHERE
+                        MONTH(date) = ? AND
+                        id_users = $id_users";
+            return $this->db->query($sql,$month)->row_array();
+        }
+
+        public function updateUangMakan($updateUangMakan,$id_absensi){
+            return $this->db->update('tb_uangmakan',$updateUangMakan,array('id_absensi' => $id_absensi));
+        }
+
+        public function addUangMakan($data){
+            return $this->db->insert('tb_uangmakan',$data);
+        }
+        public function addUangMakanBatch($data){
+            return $this->db->insert_batch('tb_uangmakan',$data);
         }
     }

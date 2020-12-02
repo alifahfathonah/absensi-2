@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-3 col-sm-2 col-xl-2 pl-0 text-center">
                   <span>
-                    <a href="<?= base_url() ?>absensi/startabsensi/" class="btn btn-outline-light btn-rounded get-started-btn">Mulai Absensi</a>
+                    <a data-toggle="modal" data-target="#modalAbsen"  class="btn btn-outline-light btn-rounded get-started-btn">Mulai Absensi</a>
                   </span>
                 </div>
               </div>
@@ -136,3 +136,23 @@
       </div>
     </div>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modalAbsen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mulai Absensi</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Anda yakin ingin memulai absensi ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="<?= base_url() ?>absensi/startabsensi/" class="btn btn-primary">Mulai Absensi</a>
+        </div>
+      </div>
+    </div>
+  </div>  

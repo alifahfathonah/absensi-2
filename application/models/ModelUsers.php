@@ -41,15 +41,17 @@
         }
 
         public function getDataKaryawanVerified($status){
-            $sql = "SELECT * from tb_users,tb_detail_users WHERE
+            $sql = "SELECT * from tb_users,tb_detail_users,tb_jabatan WHERE
                         tb_detail_users.users_id = tb_users.id_users AND
+                        tb_detail_users.id_jabatan = tb_jabatan.id_jabatan AND
                         is_verified = ?";
             return $this->db->query($sql,$status)->result_array();
         }
 
         public function getDataUsersByIdPegawai($id_pegawai){
-            $sql = "SELECT * FROM tb_users,tb_detail_users WHERE 
+            $sql = "SELECT * FROM tb_users,tb_detail_users,tb_jabatan WHERE 
                         tb_users.id_users = tb_detail_users.users_id AND
+                        tb_detail_users.id_jabatan = tb_jabatan.id_jabatan AND
                         no_pegawai = ?";
             return $this->db->query($sql,$id_pegawai)->row_array();
         }
