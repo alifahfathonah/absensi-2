@@ -199,7 +199,7 @@ class Users extends RestController
         $new_password = $this->input->post('new_password');
         $confirm_password = $this->input->post('confirm_password');
 
-        if($new_password != null && $confirm_password !== null){
+        if($new_password != null && $confirm_password !== null && $old_password != null){
             $getData = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
             $dbPass = $getData['password'];
             $id_user = $getData['id_users'];
