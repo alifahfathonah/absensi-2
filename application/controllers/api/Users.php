@@ -101,10 +101,10 @@ class Users extends RestController
         // Check Email di database
         // read Data dari database berdasarkan email
         $checkEmail = $this->db->get_where('tb_users', array('email' => $email))->row_array();
-        $id_users = $checkEmail['id_users'];
-        $users_data = $this->ModelUsers->readDataProfile($id_users);
+        
         if ($checkEmail > 0) {
-
+            $id_users = $checkEmail['id_users'];
+            $users_data = $this->ModelUsers->readDataProfile($id_users);
             // Jika Email ada di database langsung cek Password
             $checkPassword = $checkEmail['password'];
             if (password_verify($password, $checkPassword)) {
@@ -188,6 +188,96 @@ class Users extends RestController
         }else{
             $this->response([
                 'message'   => "Data tidak Boleh kosong",
+                'status'    => false
+            ],200);
+        }
+    }
+
+    public function changePassword_post(){
+        $no_pegawai = $this->input->post('id_users');
+        $old_password = $this->input->post('old_password');
+        $new_password = $this->input->post('new_password');
+        $confirm_password = $this->input->post('confirm_password');
+
+        if($new_password != null && $confirm_password !== null){
+            $getData = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
+            $dbPass = $getData['password'];
+            $id_user = $getData['id_users'];
+            if(password_verify($old_password,$dbPass)){
+                if($new_password == $confirm_password){
+                    $updatePass = array(
+                        'password'  => password_hash($new_password,PASSWORD_DEFAULT)
+                    );
+                    $this->ModelUsers->updateUsers($updatePass,$id_user);
+                    $this->response([
+                        'message'   => "Password anda berhasil diperbarui",
+                        'status'    => true  
+                    ],200);
+                }else{
+                    $this->response([
+                        'message'   => "Maaf, Password dengan Konfirmasi Password tidak cocok",
+                        'status'    => false
+                    ],200);
+                }
+            }else{
+                $this->response([
+                    'message'   => "Maaf, Password lama tidak cocok !",
+                    'status'    => false
+                ],200);
+            }
+        }else{
+            $this->response([
+                'message'   => "Data tidak boleh kosong! ",
+                'status'    => false
+            ],200);
+        }
+    }
+
+    public function changeEmail_post(){
+        $no_pegawai = $this->input->post('id_users');
+        $oldEmail = $this->input->post('old_email');
+        $newEmail = $this->input->post('new_email');
+        $confirmEmail = $this->input->post('confirm_email');
+
+        if($oldEmail != null && $newEmail != null && $confirmEmail != null){
+            $getData = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
+            $dbEmail = $getData['email'];
+            if($oldEmail == $dbEmail){
+                $id_user = $getData['id_users'];
+                if($newEmail == $confirmEmail){
+
+                    $checkEmailBaru = $this->ModelUsers->getDataUsersByEmail($newEmail);
+                    if($checkEmailBaru == null){
+                        $updateEmail = array(
+                            'email' => $newEmail
+                        );
+                        $this->ModelUsers->updateUsers($updateEmail,$id_user);
+                        $this->response([
+                            'message'   => "Email anda berhasil diperbarui !",
+                            'status'    => true
+                        ],200);
+                    }else{
+                        $this->response([
+                            'message'   => "Mohon maaf Email sudah digunakan !!",
+                            'status'    => false
+                        ],200);
+                    }
+                   
+                }else{
+                    $this->response([
+                        'message'   => "maaf Email tidak cocok dengan konfirmasi email !",
+                        'status'    => false
+                    ],200);
+                }
+            }else{
+                $this->response([
+                    'message'   => "Mohon maaf Email lama tidak cocok !",
+                    'status'    => false
+                ],200);
+            }
+        }else{
+            $this->response([
+                'message'   => "Data tidak boleh kosong! ",
                 'status'    => false
             ],200);
         }
