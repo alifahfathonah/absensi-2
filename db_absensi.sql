@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2020 at 01:54 PM
+-- Generation Time: Dec 06, 2020 at 05:08 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -46,7 +46,35 @@ CREATE TABLE `tb_absensi` (
 INSERT INTO `tb_absensi` (`id_absensi`, `id_users`, `check_in`, `check_out`, `late`, `work_time`, `date`, `is_late`, `status`) VALUES
 (89, 49, '00:00:00', '00:00:00', '00:00:00', '00:00:00', '2020-12-02', 0, 'Izin'),
 (90, 50, '00:00:00', '00:00:00', '00:00:00', '00:00:00', '2020-12-02', 0, 'Tidak'),
-(91, 51, '00:00:00', '00:00:00', '00:00:00', '00:00:00', '2020-12-02', 0, 'Tidak');
+(91, 51, '00:00:00', '00:00:00', '00:00:00', '00:00:00', '2020-12-02', 0, 'Tidak'),
+(95, 49, '16:13:13', '17:47:00', '08:13:13', '01:33:47', '2020-12-03', 1, 'Hadir'),
+(96, 50, '00:00:00', '00:00:00', '00:00:00', '00:00:00', '2020-12-03', 0, 'Tidak'),
+(97, 51, '00:00:00', '00:00:00', '00:00:00', '00:00:00', '2020-12-03', 0, 'Tidak');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_cuti`
+--
+
+CREATE TABLE `tb_cuti` (
+  `id_cuti` int(11) NOT NULL,
+  `keterangan` text NOT NULL,
+  `dari_tanggal` date NOT NULL,
+  `sampai_tanggal` date NOT NULL,
+  `jumlah_hari` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `id_users` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_cuti`
+--
+
+INSERT INTO `tb_cuti` (`id_cuti`, `keterangan`, `dari_tanggal`, `sampai_tanggal`, `jumlah_hari`, `status`, `id_users`) VALUES
+(16, 'ingin menikah', '2020-12-15', '2020-12-18', 4, 0, 49),
+(17, 'acara keluarga', '2020-12-22', '2020-12-24', 3, 0, 49),
+(18, 'acara keluarga', '2020-12-28', '2020-12-31', 4, 0, 49);
 
 -- --------------------------------------------------------
 
@@ -131,7 +159,8 @@ INSERT INTO `tb_qrcode` (`id_qrcode`, `qr_code`, `id_pegawai`, `date`) VALUES
 (11, 'PG-7116172_2020-11-28.png', 'PG-7116172', '2020-11-28'),
 (12, 'PG-7116172_2020-11-29.png', 'PG-7116172', '2020-11-29'),
 (13, 'PG-7116172_2020-11-30.png', 'PG-7116172', '2020-11-30'),
-(14, 'PG-7116172_2020-12-02.png', 'PG-7116172', '2020-12-02');
+(14, 'PG-7116172_2020-12-02.png', 'PG-7116172', '2020-12-02'),
+(15, 'PG-7116172_2020-12-03.png', 'PG-7116172', '2020-12-03');
 
 -- --------------------------------------------------------
 
@@ -199,7 +228,10 @@ CREATE TABLE `tb_uangmakan` (
 INSERT INTO `tb_uangmakan` (`id_uangmakan`, `nominal`, `tanggal`, `id_users`, `id_absensi`) VALUES
 (44, 0, '2020-12-02', 49, 89),
 (45, 0, '2020-12-02', 50, 90),
-(46, 0, '2020-12-02', 51, 91);
+(46, 0, '2020-12-02', 51, 91),
+(50, 2500, '2020-12-03', 49, 95),
+(51, 0, '2020-12-03', 50, 96),
+(52, 0, '2020-12-03', 51, 97);
 
 -- --------------------------------------------------------
 
@@ -226,7 +258,7 @@ CREATE TABLE `tb_users` (
 
 INSERT INTO `tb_users` (`id_users`, `no_pegawai`, `nik`, `nama_lengkap`, `email`, `no_telp`, `password`, `device_id`, `role`, `is_verified`) VALUES
 (6, 'admin', '0', 'admin', 'admin@gmail.com', '089669615426', '$2y$10$Jxbjk.foKOGCTpchQ9FXtegRg1nIGm7o4244Ozni/8.U9FWYy24eW', 'asdas', 1, 1),
-(49, 'PG-7116172', '3175032802000009', 'Genta Prima Syahnur', 'gentaprima600@gmail.com', '089669615427', '$2y$10$s8glNXZkiTW9e2ZQQASayuuks1Txu2EivgCZSM1THlMQvpf3BS7Lu', 'd0319e458dd7f1c2', 0, 1),
+(49, 'PG-7116172', '3175032802000009', 'Genta Prima Syahnur', 'gentaprima600@gmail.com', '089669615427', '$2y$10$73G8Iwd4yJhmCpBn1aFOHOTALqH0vFT.tb4dMv7cw.4SQn1HEQhIW', 'd0319e458dd7f1c2', 0, 1),
 (50, 'PG-466897', '3175030837748394', 'Farhan Ali Fauzan', 'farhanalifauzan00@gmail.com', '8964345482', '$2y$10$hR6zGx0ew4RxaFxhGGIBcuJryvIah0aogii4KgAE4dujcbK1M4VsW', '03c8d47a9f87667d', 0, 1),
 (51, 'PG-6264660', '3175949383757384', 'Rofi Ikhsan', 'rofii.saputra@gmail.com', '08533161618156', '$2y$10$4iJ3K7PECQrDMH93KoBG7.veQBtRHIkhHWEDfC7K7r11rMPWb6A0u', '76bb463ab3027b64', 0, 1);
 
@@ -239,6 +271,13 @@ INSERT INTO `tb_users` (`id_users`, `no_pegawai`, `nik`, `nama_lengkap`, `email`
 --
 ALTER TABLE `tb_absensi`
   ADD PRIMARY KEY (`id_absensi`),
+  ADD KEY `id_users` (`id_users`);
+
+--
+-- Indexes for table `tb_cuti`
+--
+ALTER TABLE `tb_cuti`
+  ADD PRIMARY KEY (`id_cuti`),
   ADD KEY `id_users` (`id_users`);
 
 --
@@ -297,7 +336,13 @@ ALTER TABLE `tb_users`
 -- AUTO_INCREMENT for table `tb_absensi`
 --
 ALTER TABLE `tb_absensi`
-  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+
+--
+-- AUTO_INCREMENT for table `tb_cuti`
+--
+ALTER TABLE `tb_cuti`
+  MODIFY `id_cuti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tb_jabatan`
@@ -309,7 +354,7 @@ ALTER TABLE `tb_jabatan`
 -- AUTO_INCREMENT for table `tb_qrcode`
 --
 ALTER TABLE `tb_qrcode`
-  MODIFY `id_qrcode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_qrcode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tb_shift`
@@ -327,7 +372,7 @@ ALTER TABLE `tb_surat_tidak_hadir`
 -- AUTO_INCREMENT for table `tb_uangmakan`
 --
 ALTER TABLE `tb_uangmakan`
-  MODIFY `id_uangmakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_uangmakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
@@ -344,6 +389,12 @@ ALTER TABLE `tb_users`
 --
 ALTER TABLE `tb_absensi`
   ADD CONSTRAINT `tb_absensi_ibfk_1` FOREIGN KEY (`id_users`) REFERENCES `tb_users` (`id_users`);
+
+--
+-- Constraints for table `tb_cuti`
+--
+ALTER TABLE `tb_cuti`
+  ADD CONSTRAINT `tb_cuti_ibfk_1` FOREIGN KEY (`id_users`) REFERENCES `tb_users` (`id_users`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_detail_users`

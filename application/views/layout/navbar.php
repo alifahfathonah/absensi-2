@@ -62,5 +62,3 @@
       <p style="display: none;" id="title"><?= $this->session->flashdata('title'); ?></p>
       <p style="display: none;" id="text"><?= $this->session->flashdata('text'); ?></p>
     <?php } ?>
-
-   

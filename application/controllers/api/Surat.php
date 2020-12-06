@@ -13,6 +13,7 @@ class Surat extends RestController
         parent::__construct();
         $this->load->model('ModelAbsensi');
         $this->load->model('ModelSurat');
+        $this->load->model('ModelUsers');
     }
 
     public function getDataSuratIzin_post(){
@@ -82,4 +83,161 @@ class Surat extends RestController
             ], 200);
         }
     }
+
+    public function addSuratCuti_post(){
+        $keterangan = $this->input->post('keterangan');
+        $start_date = $this->input->post('start_date');
+        $end_date = $this->input->post('end_date');
+        $no_pegawai = $this->input->post('id_users');
+        $getHari = $this->getDatesFromRange($start_date,$end_date);
+        $jumlah_hari = count($getHari);
+        $arrayDate = explode('-',$end_date);
+        $tahunCuti = $arrayDate[0];
+        $batasTahun = date('Y');
+
+        
+
+        $getDataUser = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
+        $id_users = $getDataUser['id_users'];
+        $getDataCuti = $this->ModelSurat->getDataCutiByIdUsers($id_users);
+
+        if($keterangan != null && $start_date != null && $end_date != null && $no_pegawai != null){
+
+            if(count($getHari) > 1){
+                if($getDataCuti != null){
+                    if($tahunCuti <= $batasTahun){
+                        $getTotalCuti = $this->ModelSurat->getTotalCutiByIdUsers($id_users);
+                        $totalCuti = $getTotalCuti['total'];
+                        if($totalCuti+$jumlah_hari > 12){
+                            $this->response([
+                                'message'   => "Mohon maaf, Anda Melebihi batas cuti yang diberikan !",
+                                'status'    => false
+                            ],200);
+                        }else{
+                            $data = array(
+                                'keterangan'    => $keterangan,
+                                'dari_tanggal'  => $start_date,
+                                'sampai_tanggal'=> $end_date,
+                                'jumlah_hari'   => $jumlah_hari,
+                                'id_users'      => $id_users
+                            );
+                            $this->ModelSurat->insertSuratCuti($data);
+                            $this->response([
+                                'message'   => "Terima Kasih, Pengajuan anda akan kami proses",
+                                'status'    => true
+                            ],200);
+                        }
+                    }else{
+                        $this->response([
+                            'message'   => "Mohon maaf, Anda hanya bisa mengajukan sampai akhir tahun ".$batasTahun,
+                            'status'    => false
+                        ],200);
+                    }
+    
+                    
+                    
+                }else{
+                    if($tahunCuti <= $batasTahun){
+                        if($jumlah_hari < 12){
+                            $data = array(
+                                'keterangan'    => $keterangan,
+                                'dari_tanggal'  => $start_date,
+                                'sampai_tanggal'=> $end_date,
+                                'jumlah_hari'   => $jumlah_hari,
+                                'id_users'      => $id_users
+                            );
+                            $this->ModelSurat->insertSuratCuti($data);
+                            $this->response([
+                                'message'   => "Terima Kasih, Pengajuan anda akan kami proses",
+                                'status'    => true
+                            ],200);
+                        }else{
+                            $this->response([
+                                'message'   => "Mohon maaf, Anda Melebihi batas cuti yang diberikan !",
+                                'status'    => false
+                            ],200);
+                        }
+                    }else{
+                        $this->response([
+                            'message'   => "Mohon maaf, Anda hanya bisa mengajukan sampai akhir tahun ".$batasTahun,
+                            'status'    => false
+                        ],200);
+                    }
+                   
+                }
+            }else{
+                $this->response([
+                    'message'   => "Mohon maaf, Silahkan Masukan tanggal mulai dan akhir yang benar",
+                    'status'    => false
+                ],200);   
+            }
+
+            
+        }else{
+            $this->response([
+                'message'   => "Mohon maaf, Silahkan lengkapi data terlebih dahulu",
+                'status'    => false
+            ],200);   
+        }
+       
+
+    }
+
+    public function getDataCuti_post(){
+        $no_pegawai = $this->input->post('id_users');
+        $year = date('Y');
+        $getData = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai);
+        if($getData != null){
+            $id_users = $getData['id_users'];
+            $getDataCuti = $this->ModelSurat->getAllDataCutiByIdUsers($id_users,$year);
+            $getDataSisaCuti = $this->ModelSurat->getDataSisaCutiByIdUsers($id_users,$year);
+            $jumlahCuti = $getDataSisaCuti['total'];
+            $sisaCuti = 12 - $getDataSisaCuti['total'];
+            $this->response([
+                'data_cuti' => $getDataCuti,
+                'sisa_cuti' => $sisaCuti,
+                'jumlah_cuti'   => $jumlahCuti,
+                'status'    => true
+            ],200);
+        }
+    }
+
+    public function getDatesFromRange($start, $end, $format = 'Y-m-d') {
+        $array = array();
+        $interval = new DateInterval('P1D');
+    
+        $realEnd = new DateTime($end);
+        $realEnd->add($interval);
+    
+        $period = new DatePeriod(new DateTime($start), $interval, $realEnd);
+    
+        foreach($period as $date) { 
+            $array[] = $date->format($format); 
+        }
+    
+        return $array;
+    }
+
+    public function isWeekend($start_date, $end_date, $expected_days) {
+        $start_timestamp = strtotime($start_date);
+        $end_timestamp   = strtotime($end_date);
+        $dates = array();
+        while ($start_timestamp <= $end_timestamp) {
+            if (in_array(date('l', $start_timestamp), $expected_days)) {
+               $dates[] = date('Y-m-d', $start_timestamp);
+            }
+            $start_timestamp = strtotime('+1 day', $start_timestamp);
+        }
+        return $dates;
+      }
+
+    public function test_post(){
+        $start_date        =  $this->input->post('start_date');
+        $end_date          =  $this->input->post('end_date');
+        $expected_days     =  array('Monday','Tuesday','Wednesday','Thursday','Friday');
+        $weekend_dates     =  $this->isWeekend($start_date, $end_date, $expected_days);
+        var_dump($weekend_dates);die;
+    }
+    
+     
 }

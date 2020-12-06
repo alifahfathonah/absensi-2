@@ -31,4 +31,36 @@
         public function updateData($changeSuratIzin,$id_absensi){
             return $this->db->update('tb_surat_tidak_hadir',$changeSuratIzin,array('id_absensi'=>$id_absensi));
         }
+
+        public function getDataCutiByIdUsers($id_users){
+            return $this->db->get_where('tb_cuti',array('id_users' => $id_users))->row_array();
+        }
+
+        public function insertSuratCuti($data){
+            return $this->db->insert('tb_cuti',$data);
+        }
+
+        public function getTotalCutiByIdUsers($id_users){
+            $sql = "SELECT SUM(jumlah_hari)as total FROM tb_cuti
+                        WHERE id_users = ?";
+            return $this->db->query($sql,$id_users)->row_array();
+        }
+
+        public function getDataSisaCutiByIdUsers($id_users,$year){
+            $sql = "SELECT sum(jumlah_hari)as total FROM tb_cuti WHERE
+                        id_users = ? AND
+                        YEAR(dari_tanggal) = ? AND
+                        YEAR(sampai_tanggal) = ?";
+            return $this->db->query($sql,array($id_users,$year,$year))->row_array();
+        }
+
+        public function getAllDataCutiByIdUsers($id_users,$year){
+            $sql = "SELECT * FROM tb_cuti 
+                        JOIN tb_users ON tb_cuti.id_users = tb_users.id_users 
+                        WHERE tb_cuti.id_users = ? AND
+                              YEAR(dari_tanggal) = ? AND
+                              YEAR(sampai_tanggal) = ?";
+            return $this->db->query($sql,array($id_users,$year,$year))->result_array();
+
+        }
     }
