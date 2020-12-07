@@ -167,8 +167,8 @@
 
         public function surat_izin(){
             $data= array(
-                "breadcumb"            => "Riwayat Kehadiran",
-                "title"                => "Riwayat Kehadiran - PT. Vinita",
+                "breadcumb"            => "Data Surat Izin",
+                "title"                => "Data Surat Izin - PT. Vinita",
                 "surat_izin"           => "active",
                 "data_suratizin"       => $this->ModelSurat->getDataSuratByStatus(0)
             ); 
@@ -176,6 +176,20 @@
             $this->load->view('layout/sidebar');
             $this->load->view('layout/navbar');
             $this->load->view('data/surat/surat_izin');
+            $this->load->view('layout/footer');
+        }
+
+        public function surat_cuti(){
+            $data= array(
+                "breadcumb"            => "Data Surat Cuti",
+                "title"                => "Data Surat Cuti - PT. Vinita",
+                "surat_cuti"           => "active",
+                "data_suratcuti"       => $this->ModelSurat->getAllDataCutiByStatus()
+            ); 
+            $this->load->view('layout/header',$data);
+            $this->load->view('layout/sidebar');
+            $this->load->view('layout/navbar');
+            $this->load->view('data/surat/surat_cuti');
             $this->load->view('layout/footer');
         }
 

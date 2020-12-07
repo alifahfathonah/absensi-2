@@ -44,7 +44,7 @@
         public function getDataLaporanKehadiran($id_users,$month){
             $sql = "SELECT * FROM tb_absensi WHERE 
                         id_users = ? AND
-                        MONTH(date) = ? ";
+                        MONTH(date) = ? ORDER BY date";
             return $this->db->query($sql,array($id_users,$month))->result_array();
         }
 

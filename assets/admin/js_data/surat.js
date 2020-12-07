@@ -12,3 +12,12 @@ function detail_pegawai(nama,no_pegawai,email,nama_jabatan,no_telp,device_id,fot
 function confirmIzin(url){
     document.getElementById("confirm_link").href = url;
 }
+
+function tolakCuti(base_url,id_cuti){
+    document.getElementById("link_cancel").href = base_url+'surat/cancelCuti/'+id_cuti;
+}
+
+
+function acceptCuti(base_url,id_cuti){
+    document.getElementById("link_accept").href = base_url+'surat/acceptCuti/'+id_cuti;
+}

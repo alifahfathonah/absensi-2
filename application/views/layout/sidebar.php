@@ -115,8 +115,12 @@
                 <span class="menu-title">Data Surat Izin</span>
               </a>
             </li>
-            <li class="nav-item menu-items">
-              <a class="nav-link" href="<?= base_url() ?>home/surat_izin/">
+            <?php if(isset($surat_cuti)){ ?>
+            <li class="nav-item menu-items active">
+            <?php }else{ ?>
+              <li class="nav-item menu-items ">
+            <?php } ?>
+              <a class="nav-link" href="<?= base_url() ?>home/surat_cuti/">
                 <span class="menu-icon">
                   <i class="mdi mdi-playlist-play"></i>
                 </span>

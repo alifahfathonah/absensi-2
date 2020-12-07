@@ -32,6 +32,8 @@
             return $this->db->update('tb_surat_tidak_hadir',$changeSuratIzin,array('id_absensi'=>$id_absensi));
         }
 
+        // CUTI
+
         public function getDataCutiByIdUsers($id_users){
             return $this->db->get_where('tb_cuti',array('id_users' => $id_users))->row_array();
         }
@@ -42,16 +44,20 @@
 
         public function getTotalCutiByIdUsers($id_users){
             $sql = "SELECT SUM(jumlah_hari)as total FROM tb_cuti
-                        WHERE id_users = ?";
-            return $this->db->query($sql,$id_users)->row_array();
+                        WHERE id_users = ? AND
+                        status = ? OR 
+                        status = ?";
+            return $this->db->query($sql,array($id_users,0,2))->row_array();
         }
 
         public function getDataSisaCutiByIdUsers($id_users,$year){
             $sql = "SELECT sum(jumlah_hari)as total FROM tb_cuti WHERE
                         id_users = ? AND
                         YEAR(dari_tanggal) = ? AND
-                        YEAR(sampai_tanggal) = ?";
-            return $this->db->query($sql,array($id_users,$year,$year))->row_array();
+                        YEAR(sampai_tanggal) = ? AND
+                        status = ? OR 
+                        status = ?";
+            return $this->db->query($sql,array($id_users,$year,$year,0,2))->row_array();
         }
 
         public function getAllDataCutiByIdUsers($id_users,$year){
@@ -59,8 +65,25 @@
                         JOIN tb_users ON tb_cuti.id_users = tb_users.id_users 
                         WHERE tb_cuti.id_users = ? AND
                               YEAR(dari_tanggal) = ? AND
-                              YEAR(sampai_tanggal) = ?";
+                              YEAR(sampai_tanggal) = ? ORDER BY status desc";
             return $this->db->query($sql,array($id_users,$year,$year))->result_array();
 
+        }
+
+        public function getAllDataCutiByStatus(){
+            $sql = "SELECT * FROM tb_cuti 
+                        JOIN tb_users ON tb_cuti.id_users = tb_users.id_users 
+                        JOIN tb_detail_users ON tb_users.id_users = tb_detail_users.users_id 
+                        JOIN tb_jabatan ON tb_detail_users.id_jabatan = tb_jabatan.id_jabatan 
+                        WHERE status = ?";
+            return $this->db->query($sql,0)->result_array();
+        }
+
+        public function updateDataCuti($updateStatus,$idCuti){
+            return $this->db->update('tb_cuti',$updateStatus,array('id_cuti' => $idCuti));
+        }
+
+        public function getDataCutiByIdCuti($idCuti){
+            return $this->db->get_where('tb_cuti',array('id_cuti' => $idCuti))->row_array();
         }
     }

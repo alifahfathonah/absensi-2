@@ -89,7 +89,8 @@ class Surat extends RestController
         $start_date = $this->input->post('start_date');
         $end_date = $this->input->post('end_date');
         $no_pegawai = $this->input->post('id_users');
-        $getHari = $this->getDatesFromRange($start_date,$end_date);
+        $expected_days     =  array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+        $getHari = $this->isWeekend($start_date,$end_date,$expected_days);
         $jumlah_hari = count($getHari);
         $arrayDate = explode('-',$end_date);
         $tahunCuti = $arrayDate[0];
