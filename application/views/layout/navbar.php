@@ -11,7 +11,7 @@
         </button>
         <ul class="navbar-nav w-100">
           <li class="nav-item w-100">
-            <h5>Dashboard PT...</h5>
+            <h5>Dashboard PT Restu Prima Mandiri</h5> 
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
