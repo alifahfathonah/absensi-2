@@ -81,7 +81,7 @@
               <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
               </span>
-              <span class="menu-title">Karyawan</span>
+              <span class="menu-title">Pegawai</span>
               <i class="menu-arrow"></i>
             </a>
             <?php if (isset($verifikasi_active) || isset($pegawai_active)) { ?>
@@ -91,14 +91,14 @@
                 <?php } ?>
                 <ul class="nav flex-column sub-menu">
                   <?php if (isset($pegawai_active)) { ?>
-                    <li class="nav-item"> <a class="nav-link active" href="<?= base_url('home/list_pegawai/') ?>">Data Karyawan</a></li>
+                    <li class="nav-item"> <a class="nav-link active" href="<?= base_url('home/list_pegawai/') ?>">Data Pegawai</a></li>
                   <?php } else { ?>
-                    <li class="nav-item"> <a class="nav-link" href="<?= base_url('home/list_pegawai/') ?>">Data Karyawan</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="<?= base_url('home/list_pegawai/') ?>">Data Pegawai</a></li>
                   <?php } ?>
                   <?php if (isset($verifikasi_active)) { ?>
-                    <li class="nav-item"> <a class="nav-link active" href="<?= base_url('home/verifikasi_pegawai/') ?>">Verifikasi Karyawan</a></li>
+                    <li class="nav-item"> <a class="nav-link active" href="<?= base_url('home/verifikasi_pegawai/') ?>">Verifikasi Pegawai</a></li>
                   <?php } else { ?>
-                    <li class="nav-item"> <a class="nav-link" href="<?= base_url('home/verifikasi_pegawai/') ?>">Verifikasi Karyawan</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="<?= base_url('home/verifikasi_pegawai/') ?>">Verifikasi Pegawai</a></li>
                   <?php } ?>
                 </ul>
                 </div>
