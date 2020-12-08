@@ -86,4 +86,8 @@
         public function getDataCutiByIdCuti($idCuti){
             return $this->db->get_where('tb_cuti',array('id_cuti' => $idCuti))->row_array();
         }
+
+        public function deleteCuti($id_cuti){
+            return $this->db->delete('tb_cuti',array('id_cuti'=> $id_cuti));
+        }
     }

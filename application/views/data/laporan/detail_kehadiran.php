@@ -53,6 +53,9 @@
                               <li class="nav-item" role="presentation">
                                   <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Izin Tidak Masuk</a>
                               </li>
+                              <li class="nav-item" role="presentation">
+                                  <a class="nav-link" id="cuti-tab" data-toggle="tab" href="#cuti" role="tab" aria-controls="cuti" aria-selected="false">Data Cuti</a>
+                              </li>
                           </ul>
                           <div class="tab-content" id="myTabContent">
                               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -81,8 +84,10 @@
                                                           <td><span class="btn btn-success"><?= $row['status'] ?></span></td>
                                                       <?php } else if ($row['status'] == "Tidak") { ?>
                                                           <td><span class="btn btn-danger"><?= $row['status'] ?></span></td>
-                                                      <?php } else { ?>
+                                                      <?php } else if ($row['status'] == "Izin") { ?>
                                                           <td><span class="btn btn-warning"><?= $row['status'] ?></span></td>
+                                                      <?php } else if ($row['status'] == "Cuti") { ?>
+                                                          <td><span class="btn btn-info"><?= $row['status'] ?></span></td>
                                                       <?php } ?>
                                                       <td>08:00:00 - 16:00:00</td>
                                                       <td><?= $row['check_in'] ?></td>
@@ -107,24 +112,67 @@
                                                   <th>Bukti</th>
                                                   <th>Status</th>
                                               </tr>
-                                              <?php $i=1; foreach($data_suratizin as $row){ ?>
-                                              <tr>
-                                                  <td><?= $i++ ?></td>
-                                                  <td><span class="badge badge-primary"><?= date('d-m-Y', strtotime($row['tanggal'])) ?></span></td>
-                                                  <td><?= $row['alasan'] ?></td>
-                                                  <td><a target="_blank" href="<?= base_url() ?>assets/image_surat/<?= $row['bukti'] ?>" class="badge badge-info">Lihat Bukti</a></td>
-                                                  <td>
-                                                      <?php if($row['status_surat'] == 1){ ?>
-                                                       <span class="badge badge-success">Sudah dikonfirmasi</span> 
-                                                      <?php }else {?>
-                                                        <span class="badge badge-warning">Belum dikonfirmasi</span> 
-                                                      <?php } ?>
-                                                  </td>
-                                              </tr>
+                                              <?php $i = 1;
+                                                foreach ($data_suratizin as $row) { ?>
+                                                  <tr>
+                                                      <td><?= $i++ ?></td>
+                                                      <td><span class="badge badge-primary"><?= date('d-m-Y', strtotime($row['tanggal'])) ?></span></td>
+                                                      <td><?= $row['alasan'] ?></td>
+                                                      <td><a target="_blank" href="<?= base_url() ?>assets/image_surat/<?= $row['bukti'] ?>" class="badge badge-info">Lihat Bukti</a></td>
+                                                      <td>
+                                                          <?php if ($row['status_surat'] == 1) { ?>
+                                                              <span class="badge badge-success">Sudah dikonfirmasi</span>
+                                                          <?php } else { ?>
+                                                              <span class="badge badge-warning">Belum dikonfirmasi</span>
+                                                          <?php } ?>
+                                                      </td>
+                                                  </tr>
                                               <?php } ?>
                                           </thead>
                                           <tbody>
 
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                              <div class="tab-pane fade" id="cuti" role="tabpanel" aria-labelledby="cuti-tab">
+                                  <h5>Data Riwayat Cuti</h5>
+                                  <div class="table-responsive">
+                                      <table class="table table-bordered table-striped  dataTable js-exportable mt-3">
+                                          <thead>
+                                              <tr>
+                                                  <th>No</th>
+                                                  <th>Nama</th>
+                                                  <th>Tanggal Mulai</th>
+                                                  <th>Tanggal Selesai</th>
+                                                  <th>keterangan</th>
+                                                  <th>Total Cuti</th>
+                                                  <th>Status</th>
+                                              </tr>
+
+                                          </thead>
+                                          <tbody>
+                                              <?php $i = 1;
+                                                foreach ($data_suratcuti as $row) { ?>
+                                                  <tr>
+                                                      <th><?= $i++ ?></th>
+                                                      <td><?= $row['nama_lengkap'] ?></td>
+                                                      <td><span class="badge badge-primary"><?= date('d-m-Y', strtotime($row['dari_tanggal'])) ?></span></td>
+                                                      <td><span class="badge badge-primary"><?= date('d-m-Y', strtotime($row['sampai_tanggal'])) ?></span></td>
+                                                      <td><?= $row['keterangan']; ?></td>
+                                                      <td><?= $row['jumlah_hari']; ?> hari</td>
+                                                      <td>
+                                                          <?php if($row['status'] == "0"){ ?>
+                                                            <span class="badge badge-warning">Belum Dikonfirmasi</span>
+                                                          <?php }else if($row['status'] == "1"){ ?>
+                                                            <span class="badge badge-danger">Ditolak</span>
+                                                          <?php }else if($row['status'] == "2"){ ?>
+                                                            <span class="badge badge-primary">Disetujui</span>
+                                                          <?php } ?>
+                                                      </td>
+
+                                                  </tr>
+                                              <?php } ?>
                                           </tbody>
                                       </table>
                                   </div>

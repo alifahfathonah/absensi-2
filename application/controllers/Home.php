@@ -150,13 +150,15 @@
             $month = date('m');
             $getDataUser = $this->ModelUsers->getDataUsersByIdPegawai($id_pegawai);
             $id_users = $getDataUser['id_users'];
+            $year = date('Y');
             $data= array(
                 "breadcumb"            => "Riwayat Kehadiran",
                 "title"                => "Riwayat Kehadiran - PT. Vinita",
                 "riwayat_kehadiran"    => "active",
                 "data_pegawai"         => $this->ModelUsers->getDataUsersByIdPegawai($id_pegawai),
                 'data_kehadiran'       => $this->ModelAbsensi->getDataAbsensiByBulanAndId($month,$id_users),
-                'data_suratizin'       => $this->ModelSurat->getAllDataSuratIzinByIdUsers($id_users)
+                'data_suratizin'       => $this->ModelSurat->getAllDataSuratIzinByIdUsers($id_users),
+                'data_suratcuti'       => $this->ModelSurat->getAllDataCutiByIdUsers($id_users,$year)
             ); 
             $this->load->view('layout/header',$data);
             $this->load->view('layout/sidebar');

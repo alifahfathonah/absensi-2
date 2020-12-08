@@ -203,6 +203,16 @@ class Surat extends RestController
         }
     }
 
+    public function cancelCuti_post(){
+        $id_cuti = $this->input->post('id_cuti');
+
+        $this->ModelSurat->deleteCuti($id_cuti);
+        $this->response([
+            'message'   => "Data Pengajuan Cuti anda telah dibatalkan ",
+            'status'    => true
+        ],200);
+    }
+
     public function getDatesFromRange($start, $end, $format = 'Y-m-d') {
         $array = array();
         $interval = new DateInterval('P1D');
