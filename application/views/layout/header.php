@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>PT Restu Prima Mandiri</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/admin/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/admin/vendors/css/vendor.bundle.base.css">
@@ -22,5 +22,5 @@
     <link rel="stylesheet" href="<?= base_url() ?>assets/style.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/admin/css/toastr.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="<?= base_url() ?>assets/admin/images/favicon.png" />
+    <link rel="shortcut icon" href="<?= base_url() ?>assets/admin/images/Logo_PT.png" />
   </head>

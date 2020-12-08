@@ -3,7 +3,7 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar p-0 fixed-top d-flex flex-row">
       <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="<?= base_url() ?><?= base_url() ?>assets/admin/admin/images/logo-mini.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="<?= base_url() ?><?= base_url() ?>assets/admin/admin/images/Logo_mini.png" alt="logo" /></a>
       </div>
       <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -24,9 +24,9 @@
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-              <h6 class="p-3 mb-0">Profile</h6>
+              <h6 class="p-3 mb-0">Settings</h6>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
+              <!-- <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-dark rounded-circle">
                     <i class="mdi mdi-settings text-success"></i>
@@ -35,7 +35,7 @@
                 <div class="preview-item-content">
                   <p class="preview-subject mb-1">Settings</p>
                 </div>
-              </a>
+              </a> -->
               <div class="dropdown-divider"></div>
               <a href="<?= base_url('dashboard/logout/') ?>" class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
@@ -47,9 +47,9 @@
                   <p class="preview-subject mb-1">Log out</p>
                 </div>
               </a>
-              <div class="dropdown-divider"></div>
+              <!-- <div class="dropdown-divider"></div>
               <p class="p-3 mb-0 text-center">Advanced settings</p>
-            </div>
+            </div> -->
           </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
