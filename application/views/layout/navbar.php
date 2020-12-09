@@ -18,7 +18,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
               <div class="navbar-profile">
-                <img class="img-xs rounded-circle" src="<?= base_url() ?>assets/admin/images/faces/face15.jpg" alt="">
+                <img class="img-xs rounded-circle" src="<?= base_url() ?>assets/image_profile/user.png" alt="">
                 <p class="mb-0 d-none d-sm-block navbar-profile-name"><?= $this->session->userdata('full_name_session'); ?></p>
                 <i class="mdi mdi-menu-down d-none d-sm-block"></i>
               </div>

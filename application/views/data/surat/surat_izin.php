@@ -44,7 +44,7 @@
                                                           </button>
                                                       </span>
                                                       <span data-toggle="modal" data-target="#modal_confirm">
-                                                          <button onClick="confirmIzin('<?= base_url() ?>absensi/changeStatusIzin/<?= $row['id_absensi'] ?>/<?= $row['tanggal']?>/<?= $row['id_users'] ?>')" type="button" class="btn btn-inverse-success btn-rounded btn-icon" data-toggle="tooltip" data-placement="top" title="Konfirmasi Surat Izin">
+                                                          <button onClick="confirmIzin('<?= base_url() ?>absensi/changeStatusIzin/<?= $row['id_absensi'] ?>/<?= $row['tanggal'] ?>/<?= $row['id_users'] ?>')" type="button" class="btn btn-inverse-success btn-rounded btn-icon" data-toggle="tooltip" data-placement="top" title="Konfirmasi Surat Izin">
                                                               <i class="mdi mdi-checkbox-marked-circle-outline"></i>
                                                           </button>
                                                       </span>

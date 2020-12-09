@@ -36,6 +36,7 @@
  <script src="<?= base_url() ?>assets/admin/js/toastr.js"></script>
  <script src="<?= base_url() ?>assets/admin/js_data/pegawai.js"></script>
  <script src="<?= base_url() ?>assets/admin/js_data/surat.js"></script>
+ <script src="<?= base_url() ?>assets/admin/js_data/jabatan.js"></script>
  <script src="<?= base_url() ?>assets/admin/jquery-datatable/jquery.dataTables.js"></script>
  <script src="<?= base_url() ?>assets/admin/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
  <script src="<?= base_url() ?>assets/admin/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
