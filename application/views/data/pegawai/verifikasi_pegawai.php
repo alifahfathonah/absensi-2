@@ -17,7 +17,7 @@
                           <h4 class="card-title"><?= $breadcumb ?></h4>
                           </p>
                           <div class="table-responsive">
-                              <table class="table table-bordered">
+                              <table class="table table-bordered dataTable js-exportable mt-3">
                                   <thead>
                                       <tr>
                                           <th>No</th>

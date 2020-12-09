@@ -5,7 +5,12 @@ function detail_pegawai(nama,no_pegawai,email,nama_jabatan,no_telp,device_id,fot
     document.getElementById("jabatan").innerHTML = ": "+nama_jabatan;
     document.getElementById("no_telp").innerHTML = ": "+no_telp;
     document.getElementById("device_id").innerHTML = ": "+device_id;
-    document.getElementById("foto").src = base_url +"assets/image_profile/"+foto;
+    if(foto == ""){
+        document.getElementById("foto").src = base_url+"assets/image_profile/user.png";
+    }else{
+
+        document.getElementById("foto").src = base_url +"assets/image_profile/"+foto;
+    }
     
 }
 

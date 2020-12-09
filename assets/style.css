@@ -137,3 +137,8 @@ div.dataTables_wrapper div.dataTables_filter label{
 .modal-size{
     max-width:65%!important;  
 }
+
+.container-custom{
+    margin-left: 60px!important;
+    margin-right: 60px!important;
+}

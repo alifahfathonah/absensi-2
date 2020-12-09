@@ -21,12 +21,12 @@
                 $this->session->set_flashdata('icon', 'success');
                 $this->session->set_flashdata('text', 'Tambah Data Jabatan berhasil !');
                 $this->session->set_flashdata('title', 'Sukses !!');
-                redirect(base_url('dashboard/list_jabatan/'));
+                redirect(base_url('home/list_jabatan/'));
             }else{
                 $this->session->set_flashdata('icon', 'warning');
                 $this->session->set_flashdata('text', 'Data Harus Lengkap !!');
                 $this->session->set_flashdata('title', 'Tambah Gagal !');
-                redirect(base_url('dashboard/list_jabatan/'));
+                redirect(base_url('home/list_jabatan/'));
             }
         }
 
@@ -44,12 +44,12 @@
                 $this->session->set_flashdata('icon', 'success');
                 $this->session->set_flashdata('text', 'Update Data Jabatan berhasil !');
                 $this->session->set_flashdata('title', 'Sukses !!');
-                redirect(base_url('dashboard/list_jabatan/'));
+                redirect(base_url('home/list_jabatan/'));
             }else{
                 $this->session->set_flashdata('icon', 'warning');
                 $this->session->set_flashdata('text', 'Data Harus Lengkap !!');
                 $this->session->set_flashdata('title', 'Update Gagal !');
-                redirect(base_url('dashboard/list_jabatan/'));
+                redirect(base_url('home/list_jabatan/'));
             }
         }
 
@@ -59,6 +59,6 @@
             $this->session->set_flashdata('icon', 'success');
             $this->session->set_flashdata('text', 'Delete Data Jabatan berhasil !');
             $this->session->set_flashdata('title', 'Sukses !!');
-            redirect(base_url('dashboard/list_jabatan/'));
+            redirect(base_url('home/list_jabatan/'));
         }
     }

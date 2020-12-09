@@ -17,7 +17,7 @@
                           <h4 class="card-title"><?= $breadcumb ?></h4>
                           </p>
                           <div class="table-responsive">
-                              <table class="table table-bordered">
+                              <table class="table table-bordered dataTable js-exportable mt-3">
                                   <thead>
                                       <tr>
                                           <th>No</th>
@@ -81,6 +81,7 @@
                   <div class="modal-body">
                       <div class="row ml-4">
                           <div class="col-lg-4">
+                              
                               <img id="foto" style="width: 200px; height:200px;border-radius:100px;" src="h" alt="">
                           </div>
                           <div class="col-lg-8">
