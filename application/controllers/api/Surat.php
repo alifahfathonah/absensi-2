@@ -46,7 +46,7 @@ class Surat extends RestController
             $getDataAbsensi = $this->ModelAbsensi->getDataAbsensiByIdUsers($id_users, $date);
             if ($getDataAbsensi != null) {
                 $getDataIzin = $this->ModelSurat->getDataIzinByIdUsers($id_users, $date);
-
+                if($getDataAbsensi['status'] == "Tidak"){
                 if ($getDataIzin == null) {
                     if ($this->upload->do_upload('image')) {
                         $id_absensi = $getDataAbsensi['id_absensi'];
@@ -70,6 +70,12 @@ class Surat extends RestController
                         'status'    =>  true
                     ], 200);
                 }
+            }else{
+                $this->response([
+                    'message'   => "Mohon maaf, anda tidak bisa mengajukan izin karena status anda sudah hadir",
+                    'status'    =>  true
+                ], 200);
+            }
             } else {
                 $this->response([
                     'message'   => "Mohon maaf, Absensi belum dimulai ... Silahkan ajukan permohonan nanti ",

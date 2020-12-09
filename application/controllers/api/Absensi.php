@@ -18,8 +18,8 @@
             $date = date('Y-m-d'); // ini ambil tanggal hari ini
             $no_pegawai = $this->input->post('no_pegawai'); // ambil dari no pegawai
 
-            // $time   = '20:00:00'; // ambil dari waktu yang disetting manual
-            $time   = $this->input->post('time'); // ambil dari waktu yang ada di handphone
+            $time   = '16:30:00'; // ambil dari waktu yang disetting manual
+            // $time   = $this->input->post('time'); // ambil dari waktu yang ada di handphone
 
             $getDataPegawai = $this->ModelUsers->getDataUsersByIdPegawai($no_pegawai); //mengambil id users dari no pegawai
             $id_users = $getDataPegawai['id_users']; // id users yang diambil dari getDataPegawai diatas 
@@ -145,7 +145,7 @@
             $getDataHadir = $this->ModelAbsensi->getDataHadir($id_users,$month,'Hadir');
             $getCountDataKehadiran = $this->ModelAbsensi->getCountAbsensi($id_users,$month);
             //menghitung percent dari data-data hadir dan data keseluruhan
-
+            // var_dump($getCountDataKehadiran);die;
             $percent = ( $getDataHadir['jumlah'] / $getCountDataKehadiran['jumlah'] ) * 100;
             if($percent < 100){
                 $splitPercent = substr($percent,0,2);
@@ -156,7 +156,7 @@
                 'status'    => true,
                 'percent'   => $splitPercent
             ],200);
-        }
+        } 
 
         public function getTotalUangMakan_post(){
             $no_pegawai = $this->input->post('no_pegawai');
