@@ -9,6 +9,10 @@
             return $this->db->insert_batch('tb_absensi',$data);
         }
 
+        public function insertAbsensi($data){
+            return $this->db->insert('tb_absensi',$data);
+        }
+
         public function getDataAbsensiByStatus($status,$date){
             return $this->db->get_where('tb_absensi',array('status' => $status,'date' => $date))->result_array();
         }
@@ -24,6 +28,9 @@
 
         public function getDataAbsensiByIdUsers($id_users,$date){
             return $this->db->get_where('tb_absensi',array('id_users' => $id_users,'date' => $date))->row_array();
+        }
+        public function getDataAbsensiByDate($date){
+            return $this->db->get_where('tb_absensi',array('date' => $date))->row_array();
         }
 
         public function getDataAbsensiByBulan($month){

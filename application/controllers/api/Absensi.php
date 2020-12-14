@@ -38,58 +38,74 @@
                 $late = 0;
             }
             
-            $cekDataAbsensi = $this->ModelAbsensi->getDataAbsensiByIdUsers($id_users,$date); //mengambil data absensi hari ini, tujuan nya untuk mengecek si pegawai absen masuk atau absen pulang
+            $cekDataAbsensiUsers = $this->ModelAbsensi->getDataAbsensiByIdUsers($id_users,$date); //mengambil data absensi hari ini, tujuan nya untuk mengecek si pegawai absen masuk atau absen pulang
+            $cekDataAbsensi = $this->ModelAbsensi->getDataAbsensiByDate($date);
             if($cekDataAbsensi != null){
 
-                if($cekDataAbsensi['status'] == "Tidak" || $cekDataAbsensi['status'] == "Hadir"){
-                    if($cekDataAbsensi['check_in'] == "00:00:00"){
-                        // ini proses dimana pegawai melakukan absen masuk
-                        $data = array(
-                            'check_in'  => $time,
-                            'is_late'   => $is_late,
-                            'status'    => "Hadir",
-                            'late'      => $late
-                        );
-                        
-                    }else{
-                        //ini proses dimana pegawai melakukan absen keluar
-                        if($cekDataAbsensi['check_out'] == "00:00:00"){
-                            $checkin_absensi = $cekDataAbsensi['check_in'];
-                            $start_checkout = strtotime($checkin_absensi);
-                            $end_checkout = strtotime($time);
-                            $result = ($end_checkout - (3600*7)) - $start_checkout;
-                            $work_time = date('H:i:s',$result);
-                            $jam_kerja = substr($work_time,0,2);
-                            $uang_makan = $jam_kerja * 2500;
+                if($cekDataAbsensiUsers != null){
+                    if($cekDataAbsensiUsers['status'] == "Tidak" || $cekDataAbsensiUsers['status'] == "Hadir"){
+                        if($cekDataAbsensiUsers['check_in'] == "00:00:00"){
+                            // ini proses dimana pegawai melakukan absen masuk
                             $data = array(
-                                'check_out'  => $time,
-                                'work_time'  => $work_time
+                                'check_in'  => $time,
+                                'is_late'   => $is_late,
+                                'status'    => "Hadir",
+                                'late'      => $late
                             );
-                            $updateUangMakan = array(
-                                'nominal'       => $uang_makan
-                            );
-                            $this->ModelAbsensi->updateUangMakan($updateUangMakan,$cekDataAbsensi['id_absensi']);
+                            
                         }else{
-                            $this->response([
-                                'message'   => "Maaf, Anda sudah melakukan absensi !!",
-                                'status'    => true
-                            ],200);
+                            //ini proses dimana pegawai melakukan absen keluar
+                            if($cekDataAbsensiUsers['check_out'] == "00:00:00"){
+                                $checkin_absensi = $cekDataAbsensiUsers['check_in'];
+                                $start_checkout = strtotime($checkin_absensi);
+                                $end_checkout = strtotime($time);
+                                $result = ($end_checkout - (3600*7)) - $start_checkout;
+                                $work_time = date('H:i:s',$result);
+                                $jam_kerja = substr($work_time,0,2);
+                                $uang_makan = $jam_kerja * 2500;
+                                $data = array(
+                                    'check_out'  => $time,
+                                    'work_time'  => $work_time
+                                );
+                                $updateUangMakan = array(
+                                    'nominal'       => $uang_makan
+                                );
+                                $this->ModelAbsensi->updateUangMakan($updateUangMakan,$cekDataAbsensiUsers['id_absensi']);
+                            }else{
+                                $this->response([
+                                    'message'   => "Maaf, Anda sudah melakukan absensi !!",
+                                    'status'    => true
+                                ],200);
+                            }
+                           
+                            
                         }
-                       
-                        
+                        $this->ModelAbsensi->updateAbsensi($data,$id_users,$date);
+                        $this->response([
+                            'message'   => "Absensi berhasil dilakukan",
+                            'status'    => true
+                        ],200);
+                    }else{
+                        $this->response([
+                            'message'   => "Anda Tidak bisa melakukan absensi, Karena status anda izin atau cuti !",
+                            'status'    => true
+                        ],200);
                     }
-                    $this->ModelAbsensi->updateAbsensi($data,$id_users,$date);
+                }else{
+                    $data = array(
+                        'check_in'  => $time,
+                        'is_late'   => $is_late,
+                        'status'    => "Hadir",
+                        'late'      => $late,
+                        'id_users'  => $id_users,
+                        'date'      => $date
+                    );
+                    $this->ModelAbsensi->insertAbsensi($data);
                     $this->response([
                         'message'   => "Absensi berhasil dilakukan",
                         'status'    => true
                     ],200);
-                }else{
-                    $this->response([
-                        'message'   => "Anda Tidak bisa melakukan absensi, Karena status anda izin atau cuti !",
-                        'status'    => true
-                    ],200);
-                }
-                
+                }    
      
             }else{
                 $this->response([

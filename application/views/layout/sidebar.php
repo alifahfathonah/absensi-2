@@ -67,7 +67,7 @@
 
           <a class="nav-link" href="<?= base_url() ?>dashboard/">
             <span class="menu-icon">
-              <i class="mdi mdi-speedometer"></i>
+              <i class="mdi mdi-home"></i>
             </span>
             <span class="menu-title">Dashboard</span>
           </a>
@@ -79,7 +79,7 @@
             <?php } ?>
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <span class="menu-icon">
-                <i class="mdi mdi-laptop"></i>
+                <i class="mdi mdi-clipboard-account"></i>
               </span>
               <span class="menu-title">Pegawai</span>
               <i class="menu-arrow"></i>
@@ -110,7 +110,7 @@
             <?php } ?>
               <a class="nav-link" href="<?= base_url() ?>home/surat_izin/">
                 <span class="menu-icon">
-                  <i class="mdi mdi-playlist-play"></i>
+                  <i class="mdi mdi-playlist-remove"></i>
                 </span>
                 <span class="menu-title">Data Surat Izin</span>
               </a>
@@ -134,7 +134,7 @@
             <?php } ?>
               <a class="nav-link" data-toggle="collapse" href="#laporan" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-icon">
-                  <i class="mdi mdi-laptop"></i>
+                  <i class="mdi mdi-file-document-box"></i>
                 </span>
                 <span class="menu-title">Laporan</span>
                 <i class="menu-arrow"></i>
@@ -168,7 +168,7 @@
               <?php } ?>
               <a class="nav-link" href="<?= base_url() . "home/list_jabatan" ?>">
                 <span class="menu-icon">
-                  <i class="mdi mdi-file-document-box"></i>
+                  <i class="mdi mdi-wallet-travel"></i>
                 </span>
                 <span class="menu-title">Data Jabatan</span>
               </a>
